@@ -31,14 +31,16 @@ console.log(database.list())
 return reply.status(201).send()
 })
 //Rota de lista
-server.get('/produto', (request, reply) => {
+server.get('/produto', (request) => {
   const search = request.query.search
-
-  const produtos = database.list(search)
 
   console.log(search)
 
-  return produtos
+  const produto = database.list(search)
+
+  
+
+  return produto
 })
 //Rota de update
 server.put('/produto/:id', (request, reply) =>{
