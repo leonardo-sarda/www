@@ -5,7 +5,7 @@ const sql = postgres(process.env.DATABASE_URL, {
   ssl: { rejectUnauthorized: false }, // importante para Neon
 });
 
-export const db = sql;
+export default sql
 
 /*import postgres from "postgres";
 import 'dotenv/config' 

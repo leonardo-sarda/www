@@ -1,53 +1,43 @@
-/*import { createServer } from 'node:http'
-
-const server = createServer((request, response) => {
-  response.write('teste')
-  return response.end()
-})
-
-server.listen(3340)*/
-
-
 import { fastify} from 'fastify'
-import { DataBaseMemory } from './database-memory.js' 
-import internal from 'stream'
+import { DatabasePostgres } from './database-postgres.js'
+
 
 
 const server = fastify()
 
-const database = new DataBaseMemory()
+//const database = new DataBaseMemory()
+
+const database = new DatabasePostgres()
 
 //Rota de Criação
-server.post('/produto', (request, reply) => {
-  const { prod, desc, valor} = request.body
-database.create({
-  prod,
-  desc,
+server.post('/produto', async(request, reply) => {
+  const { produto, descricao, valor} = request.body
+
+  await database.create({
+  produto,
+  descricao,
   valor,
 })
-
-console.log(database.list())
 
 return reply.status(201).send()
 })
 //Rota de lista
-server.get('/produto', (request) => {
+server.get('/produto', async(request) => {
   const search = request.query.search
 
   console.log(search)
 
-  const produto = database.list(search)
+  const produto = await database.list(search)
 
-  
 
   return produto
 })
 //Rota de update
-server.put('/produto/:id', (request, reply) =>{
+server.put('/produto/:id', async(request, reply) =>{
   const prodId = request.params.id
   const { prod, desc, valor} = request.body
 
-  database.update(prodId, {
+  await database.update(prodId, {
     prod,
     desc,
     valor

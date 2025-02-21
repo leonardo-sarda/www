@@ -1,4 +1,4 @@
-import { randomUUID } from "crypto"
+/*import { randomUUID } from "crypto"
 
 export class DataBaseMemory {
   #produtos = new Map()
@@ -36,4 +36,4 @@ export class DataBaseMemory {
   delete(id){
     this.#produtos.delete(id)
   }
-}
+}*/
