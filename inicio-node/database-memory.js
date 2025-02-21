@@ -3,7 +3,7 @@ import { randomUUID } from "crypto"
 export class DataBaseMemory {
   #produtos = new Map()
 
-  list() {
+  list(search) {
     return Array.from(this.#produtos.entries()).map((produtoArray) =>{
       const id = produtoArray[0]
       const data = produtoArray[1]
@@ -12,6 +12,13 @@ export class DataBaseMemory {
         id,
         ...data,
       }
+    })
+    .filter(produto =>{
+      if (search){
+        return produto.title.includes(search)
+      }
+
+      return true
     })
   }
 

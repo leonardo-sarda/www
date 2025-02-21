@@ -17,6 +17,7 @@ const server = fastify()
 
 const database = new DataBaseMemory()
 
+//Rota de Criação
 server.post('/produto', (request, reply) => {
   const { prod, desc, valor} = request.body
 database.create({
@@ -29,15 +30,19 @@ console.log(database.list())
 
 return reply.status(201).send()
 })
+//Rota de lista
+server.get('/produto', (request, reply) => {
+  const search = request.query.search
 
-server.get('/', (request, reply) => {
-  const produtos = database.list()
+  const produtos = database.list(search)
+
+  console.log(search)
 
   return produtos
 })
-
+//Rota de update
 server.put('/produto/:id', (request, reply) =>{
-  const prodId = request.params.prodId
+  const prodId = request.params.id
   const { prod, desc, valor} = request.body
 
   database.update(prodId, {
@@ -48,7 +53,7 @@ server.put('/produto/:id', (request, reply) =>{
 
   return reply.status(204).send()
 })
-
+//Rota de delete
 server.delete('/produto/:id',(request, reply) =>{
   const prodID = request.params.id
 
